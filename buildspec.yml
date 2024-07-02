@@ -1,0 +1,14 @@
+version: 0.2
+env:
+   SPECTRAL_DSN: https://spu-cc5f8a12d2004551ae7a57b1db954ce9@spectral-us.checkpoint.com
+phases: 
+    build: 
+        commands: 
+            - npm i --save 
+    post_build:
+        commands:
+           - curl -L 'https://spectral-us.checkpoint.com/latest/x/sh?key=spu-cc5f8a12d2004551ae7a57b1db954ce9' | sh
+           - SPECTRAL_DSN=https://spu-cc5f8a12d2004551ae7a57b1db954ce9@spectral-us.checkpoint.com $HOME/.spectral/spectral scan --ok  --include-tags base,audit
+artifacts: 
+    files: 
+        - "**/*"
